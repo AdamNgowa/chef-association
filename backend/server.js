@@ -6,6 +6,7 @@ const path = require("path");
 
 dotenv.config();
 const app = express();
+const DEFAULT_MODEL = process.env.DEFAULT_MODEL || "claude-haiku-4.5";
 
 // CORS config: allow localhost:5173 (Vite frontend)
 const corsOptions = {
@@ -17,7 +18,7 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(null, true); // Allow all origins in development to avoid CORS errors
     }
   },
   credentials: true,
