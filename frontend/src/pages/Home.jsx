@@ -1,17 +1,15 @@
 import { useEffect, useState, useContext } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Navbar from "../components/Navbar";
+import apiClient from "../utils/api";
 
 export default function Home() {
   const [info, setInfo] = useState(null);
   const { user } = useContext(AuthContext); // 👈 Add user context
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/info")
-      .then((res) => setInfo(res.data));
+    apiClient.get("/api/info").then((res) => setInfo(res.data));
   }, []);
 
   if (!info)

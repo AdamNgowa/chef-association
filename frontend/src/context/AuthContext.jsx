@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import apiClient from "../utils/api";
 
 const AuthContext = createContext();
 
@@ -10,9 +10,7 @@ function AuthProvider({ children }) {
   // Prevent re-creation of fetchUser on every render
   const fetchUser = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await apiClient.get("/api/auth/me");
       setUser(res.data);
     } catch {
       // Token invalid → clear it

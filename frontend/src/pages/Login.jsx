@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import apiClient from "../utils/api";
 
 export default function Login() {
   const nav = useNavigate();
@@ -12,10 +12,7 @@ export default function Login() {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        form
-      );
+      const res = await apiClient.post("/api/auth/login", form);
       login(res.data.token);
       nav("/dashboard");
     } catch {
