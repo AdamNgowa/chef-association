@@ -11,8 +11,10 @@ export default function Register() {
     try {
       await apiClient.post("/api/auth/register", form);
       nav("/login");
-    } catch {
-      alert("Registration failed");
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.message || err.message || "Registration failed";
+      alert(errorMsg);
     }
   };
 
@@ -26,6 +28,7 @@ export default function Register() {
         <input
           className="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
           placeholder="Full Name"
+          value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           required
         />
@@ -34,6 +37,7 @@ export default function Register() {
           className="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
           placeholder="Email Address"
           type="email"
+          value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
         />
@@ -42,6 +46,7 @@ export default function Register() {
           type="password"
           className="w-full border rounded p-2 focus:ring-2 focus:ring-green-500 outline-none"
           placeholder="Password"
+          value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
         />

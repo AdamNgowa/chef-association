@@ -15,8 +15,10 @@ export default function Login() {
       const res = await apiClient.post("/api/auth/login", form);
       login(res.data.token);
       nav("/dashboard");
-    } catch {
-      alert("Login failed.");
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.message || err.message || "Login failed.";
+      alert(errorMsg);
     }
   };
 
@@ -31,6 +33,7 @@ export default function Login() {
           className="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500 outline-none"
           placeholder="Email"
           type="email"
+          value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
 
@@ -38,6 +41,7 @@ export default function Login() {
           type="password"
           className="w-full border rounded p-2 focus:ring-2 focus:ring-blue-500 outline-none"
           placeholder="Password"
+          value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
